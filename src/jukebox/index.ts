@@ -12,8 +12,49 @@ import {
 } from '@dcl/sdk/ecs'
 import { jukeBoxMessageBus } from './messageBus'
 import { Vector3 } from '@dcl/sdk/math'
-import { setupButtons } from './buttons'
+import { setupButtons } from './buttons_3'
 import { randomString } from './utils'
+
+// const jukebox = new Jukebox({
+//   playlist: playlist,
+//   pathToTracks: 'audio/jukebox/',
+//   transform: {
+//     position: Vector3.create(8, 0, 8)
+//   },
+//   models: {
+//     body: 'models/Boombox_01.glb',
+//     buttons: {
+//       play: 'models/Buttons/Button_Play.glb',
+//       pause: 'models/Buttons/Button_Pause.glb',
+//       playPause: 'models/Buttons/Button_PlayPause.glb',
+//       stop: 'models/Buttons/Button_Stop.glb',
+//       next: 'models/Buttons/Button_Next.glb',
+//       previous: 'models/Buttons/Button_Previous.glb',
+//       forward: 'models/Buttons/Button_Forward.glb',
+//       backwards: 'models/Buttons/Button_Backwards.glb',
+//       loop: 'models/Buttons/Button_Loop.glb',
+//       loopTrack: 'models/Buttons/Button_LoopTrack.glb',
+//       shuffle: 'models/Buttons/Button_Shuffle.glb',
+//       localVolumeUp: 'models/Buttons/Button_VolumeUp.glb',
+//       localVolumeDown: 'models/Buttons/Button_VolumeDown.glb',
+//       globalVolumeUp: 'models/Buttons/Button_GlobalVolumeUp.glb',
+//       globalVolumeDown: 'models/Buttons/Button_GlobalVolumeDown.glb',
+//       multiplayer: 'models/Buttons/Button_Multiplayer.glb'
+//     }
+//   },
+//   options: {
+//     id: 'Jukebox-1',
+//     isPlaying: true,
+//     currentTrackIndex: 0,
+//     //playMode: PlayMode.SINGLE_TRACK, // whether one track is played or the playlist. PlayMode.SINGLE_TRACK or PlayMode.FULL_PLAYLIST
+//     global: true, // whether the audio plays at constant volume across the scene.
+//     volume: 1,
+//     isLooping: false,
+//     isLoopingTrack: false,
+//     isShuffeling: false,
+//     multiplayer: true
+//   }
+// })
 
 type JukeBoxSetup = {
   playlist: JukeboxTrack[]
@@ -228,7 +269,7 @@ export class Jukebox {
     executeTask(async () => {
       await this.pause()
       const audioSource = AudioSource.getMutable(this.speaker)
-      audioSource.audioClipUrl = this.getCurrentTrack()
+      audioSource.audioClipUrl = this.getCurrentTrackUrl()
       audioSource.playing = true
       audioSource.volume = this.options.volume
       audioSource.loop = this.options.isLoopingTrack
@@ -426,7 +467,7 @@ export class Jukebox {
     }
   }
 
-  getCurrentTrack(): string {
+  getCurrentTrackUrl(): string {
     return this.pathToTracks + this.getPlaylist()[this.options.currentTrackIndex].filename
   }
 
