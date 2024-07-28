@@ -321,10 +321,12 @@ export class PlaylistPlayer {
     // If player is set to loop just one track
     if (PlaybackComponent.get(this.speaker).loopTrack) {
       // Do nothing
+      return
     }
 
     // check if track is over
     if (this.timer > this.currentTrackDuration) {
+      // play next track, if this is last track in playlist, stop
       if (this.nextTrack() == false) {
         this.stop()
       }
