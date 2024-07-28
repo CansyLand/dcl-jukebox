@@ -2,16 +2,15 @@ import { AudioSource, Entity, Schemas, Transform, engine, executeTask } from '@d
 import { Vector3 } from '@dcl/sdk/math'
 import { myProfile, syncEntity } from '@dcl/sdk/network'
 
-// This is a multiplayer music playlist player that uses syncEntity for syncing states between players
+// This is a multiplayer playlist player that uses syncEntity to syncronize audio between players
 
 const BROADCAST = true
 const NO_BROADCAST = false
 
+type EventCallback = () => void
+
 type Track = {
   filename: string
-  title?: string
-  author?: string
-  published?: string
   duration?: number
 }
 
@@ -19,17 +18,32 @@ export type Playlist = Track[]
 
 export type PlaylistPlayerSettings = {
   pathToTracks: string
-  autoplay: boolean
-  isPlaying: boolean // defines if music is autoplaying on scene start
-  global: boolean // whether the audio plays at constant volume across the scene.
-  volume: number
-  currentTrackIndex: number
-  loopPlaylist: boolean
-  loopTrack: boolean
-  playlist: Playlist // ❓
-  shufflePlaylist: boolean
-  shuffledPlaylist: number[] // ❓
-  synced: boolean
+  playlist: Playlist
+  isPlaying?: boolean // defines if music is autoplaying on scene start
+  autoplay?: boolean // if true the next song will play automaticaly
+  global?: boolean // whether the audio plays at constant volume across the scene.
+  volume?: number
+  currentTrackIndex?: number
+  loopPlaylist?: boolean
+  loopTrack?: boolean
+  shufflePlaylist?: boolean
+  shuffledPlaylist?: number[]
+  synced?: boolean
+}
+
+const defaultSettings: PlaylistPlayerSettings = {
+  pathToTracks: '',
+  playlist: [],
+  isPlaying: true,
+  autoplay: true,
+  global: false,
+  volume: 1,
+  currentTrackIndex: 0,
+  loopPlaylist: true,
+  loopTrack: false,
+  shufflePlaylist: false,
+  shuffledPlaylist: [],
+  synced: true
 }
 
 const PlaybackComponent = engine.defineComponent('PlaybackComponent', {
@@ -41,7 +55,7 @@ const PlaybackComponent = engine.defineComponent('PlaybackComponent', {
 
 // const VolumeComponent = engine.defineComponent('VolumeComponent', {
 //   global: Schemas.Boolean,
-//   //volume: Schemas.Number
+//   volume: Schemas.Number
 // })
 
 const OptionsComponent = engine.defineComponent('OptionsComponent', {
@@ -61,15 +75,18 @@ export class PlaylistPlayer {
   private timer: number = 0
   private currentTrackDuration: number = 0
 
+  private events: { [key: string]: EventCallback[] } = {}
+
   constructor(settings: PlaylistPlayerSettings, parent?: Entity) {
+    settings = this.createPlaylistPlayerSettings(settings)
+
     this.playlist = settings.playlist
     this.pathToTracks = settings.pathToTracks
-    this.synced = settings.synced
+    this.synced = settings.synced ?? true
 
     this.speaker = engine.addEntity()
     Transform.create(this.speaker, {
-      parent: parent ? parent : undefined,
-      position: Vector3.create(8, 0, 8) // 🔥 🔥 🔥 🔥 🔥 🔥 🔥 🔥 🔥
+      parent: parent ? parent : undefined
     })
 
     AudioSource.create(this.speaker)
@@ -148,6 +165,7 @@ export class PlaylistPlayer {
   stop(broadcast: boolean = true): void {
     if (broadcast) PlaybackComponent.getMutable(this.speaker).isPlaying = false
     AudioSource.getMutable(this.speaker).playing = false
+    this.emit('stop')
   }
 
   selectTrack(trackIndex: number, broadcast: boolean = true) {
@@ -261,7 +279,7 @@ export class PlaylistPlayer {
   }
 
   //////////////// AUTOPLAY SYSTEM ////////////////
-  // System has a counter and triggers next track as soon as timer is greater track duration
+  // Counter system triggers next track as soon as timer is greater track duration
 
   // 🔊 👉 🔊 👉 🔊 👉 🔊 👉 🔊 👉 🔊
   // Start system that plays next song when track is finished
@@ -367,5 +385,45 @@ export class PlaylistPlayer {
 
   isSynced() {
     return this.synced
+  }
+
+  getSpeaker() {
+    return this.speaker
+  }
+
+  getState() {
+    const playlistPlayer = PlaybackComponent.get(this.speaker)
+    const options = OptionsComponent.get(this.speaker)
+
+    return {
+      ...playlistPlayer,
+      ...options
+    }
+  }
+
+  //////////////// UTILS ////////////////
+  private createPlaylistPlayerSettings(overrides: Partial<PlaylistPlayerSettings>): PlaylistPlayerSettings {
+    return {
+      ...defaultSettings,
+      ...overrides
+    }
+  }
+
+  //////////////// EVENT EMISSION ////////////////
+  // This are custom events that emit when the player
+  // does an action like play, pause, shuffle…
+
+  private emit(event: string) {
+    const eventCallbacks = this.events[event]
+    if (eventCallbacks) {
+      eventCallbacks.forEach((callback) => callback())
+    }
+  }
+
+  public on(event: string, callback: EventCallback) {
+    if (!this.events[event]) {
+      this.events[event] = []
+    }
+    this.events[event].push(callback)
   }
 }

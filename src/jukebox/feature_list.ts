@@ -44,37 +44,22 @@ mulitplayer     ✅
 
 
 play Button animation   ✅  ✅
-button states
-    play in
-    shuffle in
-    shuffleTrack in
-    pause in out - play out
-    stop in out - play out
-button indicator
-    visual click and stay
-    (change color?)
-    active: boolean
-    acoustic clicks
-custom animation (NLA track) names
+
+hoocks? ✅
+
+🔥🔥🔥 animate speaker
 
 
+JUKEBOX SUGAR MODEL play - stop - next - previous - volUp - volDown
+JUKEBOX SALT MODEL
 
 
-
-
-use extensions to add features to types
-
-hoocks?
-animate speaker animation when playing
 UX show playing track with cover image
-
-
 fade from song to song
-pay mana 💸💸💸💸💸💸💸💸💸
-(addon)
 
-player parent juckebox body
-parent buttons
+
+(addon) Jukebox mode - press play - select track - pay mana 💸💸💸💸💸💸💸💸💸
+
 
 
 whitelist controlls
@@ -83,12 +68,13 @@ blacklist / whitelist (module admin)
     whitelistbutton -> click player remove
 
 
-Simple Fork???
-
-DCL PlaylistPlayer no body usage Github?
 
 player starts dancing when play
 + button?
+
+
+
+
 
 lock controlls
 
@@ -97,14 +83,41 @@ play specific track (LP, cassete)
     code
     entity item
 
-
 lucia
 
+Simple Fork???
+DCL PlaylistPlayer no body usage Github?
+Github
+    headless
+    Jukebox 1
+    Jukebox 2
+    Grammophone
+
+
+
 all settings hub for whitelisted
+use extensions to add features to types
+
+
 
 wind forward >>     🚧
 wind backwards <<   ❌
 global audio test   ❌
 can it play tracks from my server? ❌
 multiplayer button? ❌
+
+
+Bad visible
+    button states
+        play in
+        shuffle in
+        shuffleTrack in
+        pause in out - play out
+        stop in out - play out
+    button indicator
+        visual click and stay
+        (change color?)
+        active: boolean
+        acoustic clicks
+    custom animation (NLA track) names
 */
