@@ -17,7 +17,6 @@ type Track = {
 export type Playlist = Track[]
 
 export type PlaylistPlayerSettings = {
-  pathToTracks: string
   playlist: Playlist
   isPlaying?: boolean // defines if music is autoplaying on scene start
   autoplay?: boolean // if true the next song will play automaticaly
@@ -32,7 +31,6 @@ export type PlaylistPlayerSettings = {
 }
 
 const defaultSettings: PlaylistPlayerSettings = {
-  pathToTracks: '',
   playlist: [],
   isPlaying: true,
   autoplay: true,
@@ -70,7 +68,6 @@ export let entityEnumId = 100
 export class PlaylistPlayer {
   private speaker: Entity
   private playlist: Playlist
-  private pathToTracks: string
   private synced: boolean
   private timer: number = 0
   private currentTrackDuration: number = 0
@@ -81,7 +78,6 @@ export class PlaylistPlayer {
     settings = this.createPlaylistPlayerSettings(settings)
 
     this.playlist = settings.playlist
-    this.pathToTracks = settings.pathToTracks
     this.synced = settings.synced ?? true
 
     this.speaker = engine.addEntity()
@@ -155,7 +151,7 @@ export class PlaylistPlayer {
     }
   }
 
-  // 🚧 🚧 🚧 will actuly pause when SDK7 updates 'currentTime' or 'resetCursor' 🚧 🚧 🚧
+  // 🚧 🚧 🚧 will actually pause when SDK7 updates 'currentTime' or 'resetCursor' 🚧 🚧 🚧
   // https://docs.decentraland.org/creator/development-guide/sdk7/sounds/
   pause(broadcast: boolean = true): void {
     // console.log('Stopped at: ' + AudioSource.get(this.speaker).currentTime) 🚧 🚧 🚧 Waiting until is updated in SDK7 🚧 🚧 🚧
@@ -297,7 +293,15 @@ export class PlaylistPlayer {
 
   updateCurrentTrackDuration() {
     this.timer = 0
-    const duration = this.playlist[PlaybackComponent.get(this.speaker).currentTrackIndex].duration
+    const playback = PlaybackComponent.get(this.speaker)
+    const options = OptionsComponent.get(this.speaker)
+
+    let playlistIndex = playback.currentTrackIndex
+    if (options.shufflePlaylist) {
+      playlistIndex = options.shuffledPlaylist[playlistIndex]
+    }
+
+    const duration = this.playlist[playlistIndex].duration
     if (duration) {
       this.currentTrackDuration = duration
     } else {
@@ -325,6 +329,7 @@ export class PlaylistPlayer {
     }
 
     // check if track is over
+    console.log(this.timer, this.currentTrackDuration)
     if (this.timer > this.currentTrackDuration) {
       // play next track, if this is last track in playlist, stop
       if (this.nextTrack() == false) {
@@ -354,7 +359,7 @@ export class PlaylistPlayer {
       playlistIndex = options.shuffledPlaylist[index]
     }
 
-    return this.pathToTracks + this.playlist[playlistIndex].filename
+    return this.playlist[playlistIndex].filename
   }
 
   isFirstTrack(): boolean {

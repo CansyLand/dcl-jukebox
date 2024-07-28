@@ -2,20 +2,19 @@ import { Playlist } from './playlistPlayer'
 
 export const playlist: Playlist = [
   {
-    filename: 'as-we-parted-at-the-gate.mp3',
-    duration: 20
+    filename: 'audio/Aaron_Leupp-Waifumon_64.mp3',
+    duration: 90
   },
   {
-    filename: 'sounds_hit01.mp3',
-    duration: 1
-  },
-
-  {
-    filename: 'atlantic-dance-orchestra.mp3',
-    duration: 20
+    filename: 'audio/Classical_GymnopedieNo1_glasspiano_64.mp3',
+    duration: 166
   },
   {
-    filename: 'whats-this.mp3',
-    duration: 20
+    filename: 'audio/James Halliday, MetaArchs - Decentraland Anthem_64.mp3',
+    duration: 100
+  },
+  {
+    filename: 'audio/Tudamoon_Presents-The_Time_is_Now_64.mp3',
+    duration: 246
   }
 ]

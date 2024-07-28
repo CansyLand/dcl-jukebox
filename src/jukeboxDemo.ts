@@ -6,7 +6,6 @@ import { ButtonConfig, createPlaylistButtons } from './playlistPlayer/playlistBu
 
 export function createJukeboxDemo() {
   const settings: PlaylistPlayerSettings = {
-    pathToTracks: 'audio/jukebox/',
     playlist: playlist,
     autoplay: true, // defines wheter next trac is played automaticaly
     isPlaying: false, // defines if music is autoplaying on scene start

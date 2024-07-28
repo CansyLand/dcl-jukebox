@@ -6,7 +6,6 @@ import { ButtonConfig, createPlaylistButtons } from './playlistPlayer/playlistBu
 
 export function createJukeboxSalt() {
   const settingsSalt: PlaylistPlayerSettings = {
-    pathToTracks: 'audio/jukebox/',
     playlist: playlist,
     shufflePlaylist: true
   }

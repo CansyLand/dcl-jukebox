@@ -6,7 +6,6 @@ import { playlist } from './playlistPlayer/playlist'
 export function createHeadlessPlayer() {
   // Define the jukebox settings
   const settings: PlaylistPlayerSettings = {
-    pathToTracks: 'audio/jukebox/',
     playlist: playlist,
     autoplay: true, // defines wheter next track is played automaticaly
     isPlaying: true, // defines if music is autoplaying on scene start
