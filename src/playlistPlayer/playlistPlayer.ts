@@ -329,7 +329,6 @@ export class PlaylistPlayer {
     }
 
     // check if track is over
-    console.log(this.timer, this.currentTrackDuration)
     if (this.timer > this.currentTrackDuration) {
       // play next track, if this is last track in playlist, stop
       if (this.nextTrack() == false) {

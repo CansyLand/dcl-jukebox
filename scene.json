@@ -2,15 +2,15 @@
   "ecs7": true,
   "runtimeVersion": "7",
   "display": {
-    "title": "SDK7 Jukebox",
-    "description": "Jukebox Playground",
+    "title": "Jukebox Salt & Sugar",
+    "description": "Jukebox player that does not need a streaming server",
     "navmapThumbnail": "images/scene-thumbnail.png",
     "favicon": "favicon_asset"
   },
   "owner": "",
   "contact": {
-    "name": "SDK",
-    "email": ""
+    "name": "Cansy",
+    "email": "cansyland@gmail.com"
   },
   "main": "bin/index.js",
   "tags": [],
