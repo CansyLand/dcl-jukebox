@@ -1,5 +1,5 @@
 import { engine, GltfContainer, Transform } from '@dcl/sdk/ecs'
-import { Vector3 } from '@dcl/sdk/math'
+import { Quaternion, Vector3 } from '@dcl/sdk/math'
 import { PlaylistPlayer, PlaylistPlayerSettings } from './playlistPlayer/playlistPlayer'
 import { playlist } from './playlistPlayer/playlist'
 import { ButtonConfig, createPlaylistButtons } from './playlistPlayer/playlistButtons'
@@ -16,7 +16,8 @@ export function createJukeboxSalt() {
     src: 'models/salt/salt-jukebox.glb'
   })
   Transform.create(saltJukeboxModel, {
-    position: Vector3.create(8, 0, 10)
+    position: Vector3.create(8.6, 0.2, 8),
+    rotation: Quaternion.fromEulerDegrees(0, 180, 0)
   })
 
   // Attach playlist player to jukebox model

@@ -20,6 +20,14 @@ export function main() {
   // Jukebox headless mode (invisible player)
   // createHeadlessPlayer()
 
+  const displayStand = engine.addEntity()
+  Transform.create(displayStand, {
+    position: Vector3.create(8, 0.2, 8)
+  })
+  GltfContainer.create(displayStand, {
+    src: 'models/displayStand.glb'
+  })
+
   const grass = engine.addEntity()
   Transform.create(grass, {
     position: Vector3.create(8, 0, 8)

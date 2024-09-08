@@ -1,5 +1,5 @@
 import { engine, GltfContainer, Transform } from '@dcl/sdk/ecs'
-import { Vector3 } from '@dcl/sdk/math'
+import { Quaternion, Vector3 } from '@dcl/sdk/math'
 import { PlaylistPlayer, PlaylistPlayerSettings } from './playlistPlayer/playlistPlayer'
 import { playlist } from './playlistPlayer/playlist'
 import { ButtonConfig, createPlaylistButtons } from './playlistPlayer/playlistButtons'
@@ -23,7 +23,7 @@ export function createJukeboxSugar() {
     src: 'models/sugar/sugar-jukebox.glb'
   })
   Transform.create(sugarJukeboxModel, {
-    position: Vector3.create(8, 0, 6)
+    position: Vector3.create(7.4, 0.2, 8)
   })
 
   // Attach playlist player to jukebox model
