@@ -16,6 +16,10 @@ https://github.com/BillyTeacoin/dclsoundlibrary
 Created Within the scope of the Sandstorm creativity & Growth grant:
 https://app.sandstorm.co/build/99/view/decentraland-dao-c-g-grant-5-salt-sugar
 
+| ![Julebox Salt Dancing in Decentraland](images/salt_dancing.jpg) | ![Julebox Sugar Dancing in Decentraland](images/sugar_dancing.jpg) |
+| :--------------------------------------------------------------: | :----------------------------------------------------------------: |
+|                       Julebox Salt Dancing                       |                       Julebox Sugar Dancing                        |
+
 # License 3D Files
 
 "Jukebox Salt & Sugar" by CansyLand is licensed under CC BY-SA 4.0.
