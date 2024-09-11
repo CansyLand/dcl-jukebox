@@ -6,10 +6,10 @@ Just add the mp3 into the audio folder and update the playlist.ts file.
 
 ![Julebox Salt & Sugar in Deventraland (Scene Preview)](images/screenshot.jpg)
 
-# Audio
+# Updates
 
-Audio files are from the Decentraland Sound Library
-https://github.com/BillyTeacoin/dclsoundlibrary
+The most up to date version you can find here
+https://github.com/CansyLand/dcl-jukebox
 
 # Sandstorm
 
